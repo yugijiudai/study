@@ -2,15 +2,13 @@ package com.immoc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author yugi
  * @apiNote
  * @since 2017-06-23
  */
+// SpringBootApplication没配置，默认扫描当前包下的所有类
 @SpringBootApplication
 // @EnableAutoConfiguration
 // @ComponentScan

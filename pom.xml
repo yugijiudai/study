@@ -60,11 +60,13 @@
     <dependencyManagement>
         <dependencies>
 
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql_version}</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>mysql</groupId>-->
+                <!--<artifactId>mysql-connector-java</artifactId>-->
+                <!--&lt;!&ndash;<version>${mysql_version}</version>&ndash;&gt;-->
+                <!--&lt;!&ndash;<scope>runtime</scope>&ndash;&gt;-->
+            <!--</dependency>-->
+
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>

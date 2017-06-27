@@ -1,5 +1,6 @@
-package com.immoc;
+package com.immoc.controller;
 
+import com.immoc.GirlProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import javax.annotation.Resource;
 // @Controller
 @RequestMapping("/hello")
 public class HelloController {
+
 
     //region 不用这种注释
 /*    @Value("${cupSize}")
