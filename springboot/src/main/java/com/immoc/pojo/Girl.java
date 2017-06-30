@@ -5,6 +5,8 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author yugi
@@ -21,7 +23,11 @@ public class Girl {
 
     private String cupSize;
 
+    @Min(value = 18, message = "未成年啊")
     private Integer age;
+
+    @NotNull(message = "金额必传")
+    private Double money;
 
 
 }

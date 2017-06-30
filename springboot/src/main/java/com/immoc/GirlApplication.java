@@ -2,6 +2,7 @@ package com.immoc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 
 /**
  * @author yugi
@@ -13,6 +14,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 // @EnableAutoConfiguration
 // @ComponentScan
 // @Configuration
+// ServletComponentScan要加上，不然DruidStatViewServlet会找不到404
+@ServletComponentScan
 public class GirlApplication {
 
     public static void main(String[] args) {

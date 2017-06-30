@@ -1,14 +1,12 @@
 package com.immoc.controller;
 
-import com.immoc.GirlProperties;
-import org.springframework.stereotype.Controller;
+import com.immoc.config.GirlProperties;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -25,13 +23,13 @@ import javax.annotation.Resource;
 public class HelloController {
 
 
-    //region 不用这种注释
-/*    @Value("${cupSize}")
+/*    //region 不用这种注释
+    @Value("${cupSize}")
     private String cupSize;
 
     @Value("${content}")
-    private String content;*/
-    //endregion
+    private String content;
+    //endregion*/
 
     @Resource
     private GirlProperties girlProperties;

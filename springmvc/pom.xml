@@ -71,6 +71,7 @@
             <artifactId>spring-oxm</artifactId>
         </dependency>
 
+
     </dependencies>
     <build>
         <finalName>springmvc</finalName>
