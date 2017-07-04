@@ -1,0 +1,93 @@
+//group 'com.immoc.gradle'
+//version '1.0-SNAPSHOT'
+
+//所有项目都用这个
+allprojects {
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    apply plugin: 'maven-publish'
+
+
+    publishing {
+        publications {
+            //mavenJava这个名字随便定义
+            mavenJava(MavenPublication) {
+                //这里要加groupId，不然发布上去
+                groupId 'com.immoc.gradle'
+                //artifactId 'web'
+                // 若是war包，就写components.web,若是jar包，就写components.java,
+                // 如果这里要用web的话,这个设置不能放在这里,要放在web模块下,因为只有web模块声明了打包的类型
+                from components.java
+            }
+        }
+        repositories {
+            mavenLocal()
+        }
+    }
+
+
+}
+
+subprojects {
+    repositories {
+//        使用私服
+        maven {
+            url ''
+        }
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        testCompile "junit:junit:4.12"
+        compile 'org.apache.logging.log4j:log4j-web:2.4.1'
+    }
+    /**
+     * 支持utf-8中文编译
+     */
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}
+
+/*configurations.all {
+    resolutionStrategy {
+        *//*加了这个如果发现依赖冲突会build失败 *//*
+        failOnVersionConflict()
+        *//*强制指定一个版本,如果不指定,发现版本冲突默认会使用当前的最高版本 *//*
+        force 'dom4j:dom4j:1.1'
+    }
+}*/
+
+/**
+ * 创建文件夹方法
+ */
+def createDir = {
+    path ->
+        File dir = new File(path)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+}
+
+/**
+ * 创建java目录
+ */
+task makeJavaDir() {
+    def paths = ['src/main/java', 'src/main/resources', 'src/test/java', 'src/test/resources']
+    doFirst {
+        paths.forEach(createDir)
+        println '创建java目录成功'
+    }
+}
+
+/**
+ * 创建web目录
+ */
+task makeWebDir() {
+    dependsOn 'makeJavaDir'
+    def paths = ['src/main/webapp', 'src/test/webapp']
+    doLast {
+        paths.forEach(createDir)
+        println '创建web目录成功'
+    }
+}
