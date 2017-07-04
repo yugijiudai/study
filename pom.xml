@@ -9,6 +9,7 @@
     <modules>
         <module>springmvc</module>
         <module>springboot</module>
+        <module>diffDataBase</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -55,6 +56,8 @@
         <log4j_version>1.2.17</log4j_version>
         <commons-lang3_version>3.4</commons-lang3_version>
         <druid_version>1.0.25</druid_version>
+        <hibernate_version>4.3.10.Final</hibernate_version>
+        <hibernate_jpa_version>1.0.0.Final</hibernate_jpa_version>
 
     </properties>
 
@@ -197,6 +200,23 @@
                 <version>${spring_boot_version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate_version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-ehcache</artifactId>
+                <version>${hibernate_version}</version>
             </dependency>
 
 

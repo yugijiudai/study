@@ -43,6 +43,13 @@ public class GirlController {
         return girlRepository.findAll();
     }
 
+
+    @GetMapping(value = "/listGirls2")
+    public ResultVo girlList2() {
+        List<Girl> girls = girlRepository.findAll();
+        return ResultUtil.buildSuccess(girls);
+    }
+
     /**
      * 添加一个女生
      */

@@ -3,7 +3,6 @@ package com.immoc.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -105,7 +104,4 @@ public class DruidDBConfig {
         return datasource;
     }
 
-    public static void main(String[] args) {
-        SpringApplication.run(DruidDBConfig.class, args);
-    }
 }
