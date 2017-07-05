@@ -58,7 +58,7 @@
 
     <!-- 配置hibernate session工厂 -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
+        <property name="dataSource" ref="dataSource00"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
@@ -76,7 +76,6 @@
             </list>
         </property>
     </bean>
-
 
 
     <bean name="dataSource2" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
@@ -120,54 +119,62 @@
         </property>
     </bean>
 
-    <bean id="sessionFactory2" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource2"/>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
-                <prop key="hibernate.cache.use_second_level_cache">false</prop>
-                <!--<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>-->
-            </props>
-        </property>
-        <!-- 自动扫描注解方式配置的hibernate类文件 -->
-        <property name="packagesToScan">
-            <list>
-                <value>com.imooc.pojo</value>
-            </list>
-        </property>
-    </bean>
+    <!--<bean id="sessionFactory2" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource00"/>-->
+        <!--<property name="hibernateProperties">-->
+            <!--<props>-->
+                <!--<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>-->
+                <!--<prop key="hibernate.dialect">${hibernate.dialect}</prop>-->
+                <!--<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>-->
+                <!--<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>-->
+                <!--<prop key="hibernate.cache.use_second_level_cache">false</prop>-->
+                <!--&lt;!&ndash;<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>&ndash;&gt;-->
+            <!--</props>-->
+        <!--</property>-->
+        <!--&lt;!&ndash; 自动扫描注解方式配置的hibernate类文件 &ndash;&gt;-->
+        <!--<property name="packagesToScan">-->
+            <!--<list>-->
+                <!--<value>com.imooc.pojo</value>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 
 
-    <bean id="transactionManager2" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="dataSource" ref="dataSource2"/>
+    <!--<bean id="transactionManager2" class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
         <!--<property name="sessionFactory" ref="sessionFactory2"/>-->
-    </bean>
-
-    <tx:annotation-driven transaction-manager="transactionManager2"/>
-
+    <!--</bean>-->
+    <!--<tx:annotation-driven transaction-manager="transactionManager2"/>-->
 
 
     <!-- 配置事务管理器 -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <!--<property name="sessionFactory" ref="sessionFactory"/>-->
-        <property name="dataSource" ref="dataSource"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
-    <!--<bean name="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
-        <!--<property name="sessionFactory" ref="sessionFactory"/>-->
-    <!--</bean>-->
-    <!---->
-
     <!-- 注解方式配置事物 -->
-    <tx:annotation-driven transaction-manager="transactionManager"/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false"/>
+    <!-- 支持注解 -->
+    <context:annotation-config/>
+
 
 
     <!-- 上面的druid的配置 -->
     <bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
         <property name="statementExecutableSqlLogEnable" value="false"/>
     </bean>
+
+    <bean id="dataSource00" class="com.imooc.dao.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="2" value-ref="dataSource2"/>
+                <entry key="1" value-ref="dataSource"/>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="dataSource"/>
+    </bean>
+
+
+
+
+
 
 </beans>

@@ -26,9 +26,11 @@ public class StudentDaoTest {
     @Test
     public void addStudent() throws Exception {
         Assert.assertNotNull(studentDao);
-        Student student = new Student();
-        student.setSname("嘿嘿2");
-        studentDao.addStudent(student);
+        Student student1 = new Student();
+        student1.setSname("嘿嘿1");
+        Student student2 = new Student();
+        student2.setSname("嘿嘿2");
+        studentDao.addStudent(student1, student2);
     }
 
     @Test
@@ -39,10 +41,16 @@ public class StudentDaoTest {
 
     @Test
     public void findStudentFactory() throws Exception {
-        Student student1 = studentDao.findStudentFactory2(1L);
+        Student student1 = studentDao.findStudentFactory1(1L);
         log.info(student1);
-        Student student2 = studentDao.findStudentFactory1(1L);
+        Student student2 = studentDao.findStudentFactory2(1L);
         log.info(student2);
+    }
+
+    @Test
+    public void findStudentFactory3() throws Exception {
+        Student student1 = studentDao.findStudentFactory3(1L);
+        log.info(student1);
     }
 
 

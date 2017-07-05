@@ -30,7 +30,7 @@ public class StudentController {
 
     @PostMapping(value = "addStudent")
     public Student addStudent(@RequestBody Student student) {
-        studentDao.addStudent(student);
+        studentDao.addStudent(student, student);
         return student;
     }
 }

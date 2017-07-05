@@ -1,20 +1,13 @@
 package com.imooc.dao;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.imooc.pojo.Student;
 import lombok.extern.log4j.Log4j2;
-import org.hibernate.SessionFactory;
-import org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl;
-import org.hibernate.engine.jdbc.connections.spi.ConnectionProvider;
-import org.hibernate.engine.spi.SessionFactoryImplementor;
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import javax.sql.DataSource;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
 
 /**
  * @author yugi
@@ -25,43 +18,67 @@ import java.sql.SQLException;
 @Log4j2
 public class StudentDao {
 
-    @Resource
-    private BaseDao baseDao;
 
-    private String getDataBaseUrl(HibernateDaoSupport dao) {
+    @Resource
+    private BaseDaoFactory baseDaoFactory;
+
+
+    /**
+     * 如果有多个数据源这里的事务要指定对应哪个,如果用了@Transactional,即使用了CustomerContextHolder.setCustomerType("2")也会无效,他们的数据源还是不会变,
+     * 如果想一次保存到多个数据源,从第二个数据源开始必须手动开启事务,并且用openSession拿到新的session,不然用currentSession的话还是会是之前数据源
+     */
+    @Transactional
+    public void addStudent(Student student1, Student student2) {
+        // HibernateDaoSupport dao = baseDao.getDao();
+        Transaction tx1 = null;
+        Session session = null;
         try {
-            String url = ((SessionFactoryImplementor) dao.getSessionFactory()).getConnectionProvider().getConnection().getMetaData().getURL();
-            log.info("数据库url:{}", url);
-            return url;
+            BaseDao baseDao = baseDaoFactory.getDao();
+            baseDao.getHibernateTemplate().saveOrUpdate(student1);
+            baseDao = baseDaoFactory.getDao("2");
+            // CustomerContextHolder.setCustomerType("2");
+            session = baseDao.getHibernateTemplate().getSessionFactory().openSession();
+            tx1 = session.beginTransaction();
+            // baseDao.getHibernateTemplate().saveOrUpdate(student1);
+            session.saveOrUpdate(student2);
+            // baseDao.getSessionFactory().openSession().saveOrUpdate(student1);
+            // Integer.parseInt("few");
+            tx1.commit();
         }
-        catch (SQLException e) {
-            e.printStackTrace();
+        catch (Exception e) {
+            if (tx1 != null) {
+                tx1.rollback();
+                log.fatal("回滚");
+            }
             throw new RuntimeException(e);
         }
-    }
-
-    // 如果有多个数据源这里的事务要指定对应哪个
-    @Transactional
-    public void addStudent(Student student) {
-        HibernateDaoSupport dao = baseDao.getDao("1");
-        dao.getHibernateTemplate().saveOrUpdate(student);
+        finally {
+            if (session != null) {
+                session.close();
+            }
+        }
     }
 
     public Student findStudent(Long id) {
-        HibernateDaoSupport dao = baseDao.getDao("1");
-        return dao.getHibernateTemplate().get(Student.class, id);
+        return baseDaoFactory.getDao().getHibernateTemplate().get(Student.class, id);
     }
 
     public Student findStudentFactory1(Long id) {
-        HibernateDaoSupport dao = baseDao.getDao("1");
-        this.getDataBaseUrl(dao);
-        return dao.getHibernateTemplate().get(Student.class, id);
+        BaseDao baseDao = baseDaoFactory.getDao();
+        return baseDao.getHibernateTemplate().get(Student.class, id);
     }
 
     public Student findStudentFactory2(Long id) {
-        HibernateDaoSupport dao = baseDao.getDao("2");
-        this.getDataBaseUrl(dao);
-        return dao.getHibernateTemplate().get(Student.class, id);
-
+        BaseDao baseDao = baseDaoFactory.getDao("2");
+        return baseDao.getHibernateTemplate().get(Student.class, id);
     }
+
+    public Student findStudentFactory3(Long id) {
+        BaseDao baseDao = baseDaoFactory.getDao();
+        Student student = baseDao.getHibernateTemplate().get(Student.class, id);
+        log.info(student);
+        baseDao = baseDaoFactory.getDao("2");
+        return baseDao.getHibernateTemplate().get(Student.class, id);
+    }
+
 }
