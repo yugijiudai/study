@@ -1,6 +1,7 @@
 package com.imooc.dao;
 
 import com.imooc.pojo.Student;
+import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +17,7 @@ import javax.annotation.Resource;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring-hibernate.xml"})
+@Log4j2
 public class StudentDaoTest {
 
     @Resource
@@ -25,14 +27,23 @@ public class StudentDaoTest {
     public void addStudent() throws Exception {
         Assert.assertNotNull(studentDao);
         Student student = new Student();
-        student.setSname("张三");
+        student.setSname("嘿嘿2");
         studentDao.addStudent(student);
     }
 
     @Test
     public void findStudent() throws Exception {
         Student student = studentDao.findStudent(1L);
-        System.out.println(student);
+        log.info(student);
     }
+
+    @Test
+    public void findStudentFactory() throws Exception {
+        Student student1 = studentDao.findStudentFactory2(1L);
+        log.info(student1);
+        Student student2 = studentDao.findStudentFactory1(1L);
+        log.info(student2);
+    }
+
 
 }
