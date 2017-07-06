@@ -6,8 +6,6 @@ allprojects {
     apply plugin: 'java'
     sourceCompatibility = 1.8
     apply plugin: 'maven-publish'
-
-
     publishing {
         publications {
             //mavenJava这个名字随便定义
@@ -24,23 +22,27 @@ allprojects {
             mavenLocal()
         }
     }
-
-
 }
+
 
 subprojects {
     repositories {
 //        使用私服
-        maven {
-            url ''
-        }
+        maven {url ''}
         mavenLocal()
         mavenCentral()
     }
+    ext.springVersion = '4.3.9.RELEASE'
+    ext.log4j2Version = '2.4.1'
     dependencies {
         testCompile "junit:junit:4.12"
-        compile 'org.apache.logging.log4j:log4j-web:2.4.1'
+        testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
+        runtime group: 'mysql', name: 'mysql-connector-java', version: '5.1.10'
+        compile 'org.apache.logging.log4j:log4j-web:' + log4j2Version
+        compile group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
+        compile group: 'com.alibaba', name: 'druid', version: '1.0.25'
     }
+
     /**
      * 支持utf-8中文编译
      */
