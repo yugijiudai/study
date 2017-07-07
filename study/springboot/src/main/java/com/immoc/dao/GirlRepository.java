@@ -16,4 +16,5 @@ public interface GirlRepository extends JpaRepository<Girl, Integer> {
      * 通过年龄查询
      */
     List<Girl> findByAgeBeforeAndAgeAfter(Integer before, Integer after);
+
 }

@@ -68,8 +68,8 @@
             <!--<dependency>-->
                 <!--<groupId>mysql</groupId>-->
                 <!--<artifactId>mysql-connector-java</artifactId>-->
-                <!--&lt;!&ndash;<version>${mysql_version}</version>&ndash;&gt;-->
-                <!--&lt;!&ndash;<scope>runtime</scope>&ndash;&gt;-->
+                <!--<version>${mysql_version}</version>-->
+                <!--<scope>runtime</scope>-->
             <!--</dependency>-->
 
             <dependency>
