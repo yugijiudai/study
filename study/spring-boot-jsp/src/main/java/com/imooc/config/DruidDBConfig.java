@@ -1,14 +1,14 @@
-package com.immoc.config;
+package com.imooc.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.sql.SQLException;
 
 /**
  * @author yugi
@@ -19,10 +19,7 @@ import javax.sql.DataSource;
 @Log4j2
 public class DruidDBConfig {
 
-    @Resource
-    private DBConfig dbConfig;
-
-  /*  @Value("${druid.url}")
+    @Value("${druid.url}")
     private String dbUrl;
 
     @Value("${druid.username}")
@@ -74,37 +71,36 @@ public class DruidDBConfig {
     private String filters;
 
     @Value("${druid.connectionProperties}")
-    private String connectionProperties;*/
+    private String connectionProperties;
 
 
     @Bean     //声明其为Bean实例
     @Primary  //在同样的DataSource中，首先使用被标注的DataSource
     public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
+        datasource.setUrl(this.dbUrl);
+        datasource.setUsername(username);
+        datasource.setPassword(password);
+        datasource.setDriverClassName(driverClassName);
+        datasource.setInitialSize(initialSize);
+        datasource.setMinIdle(minIdle);
+        datasource.setMaxActive(maxActive);
+        datasource.setMaxWait(maxWait);
+        datasource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
+        datasource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
+        datasource.setValidationQuery(validationQuery);
+        datasource.setTestWhileIdle(testWhileIdle);
+        datasource.setTestOnBorrow(testOnBorrow);
+        datasource.setTestOnReturn(testOnReturn);
+        datasource.setPoolPreparedStatements(poolPreparedStatements);
+        datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
         try {
-            // datasource.setUrl(this.dbUrl);
-            // datasource.setUsername(username);
-            // datasource.setPassword(password);
-            // datasource.setDriverClassName(driverClassName);
-            // datasource.setInitialSize(initialSize);
-            // datasource.setMinIdle(minIdle);
-            // datasource.setMaxActive(maxActive);
-            // datasource.setMaxWait(maxWait);
-            // datasource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
-            // datasource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
-            // datasource.setValidationQuery(validationQuery);
-            // datasource.setTestWhileIdle(testWhileIdle);
-            // datasource.setTestOnBorrow(testOnBorrow);
-            // datasource.setTestOnReturn(testOnReturn);
-            // datasource.setPoolPreparedStatements(poolPreparedStatements);
-            // datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);
-            // datasource.setConnectionProperties(connectionProperties);
-            // datasource.setFilters(filters);
-            BeanUtils.copyProperties(datasource, dbConfig);
+            datasource.setFilters(filters);
         }
-        catch (Exception e) {
-            log.error("druid configuration initialization filter", e);
+        catch (SQLException e) {
+            log.error(e);
         }
+        datasource.setConnectionProperties(connectionProperties);
         return datasource;
     }
 

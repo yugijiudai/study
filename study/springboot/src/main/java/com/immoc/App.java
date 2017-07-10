@@ -54,8 +54,6 @@ public class App {
 
 
     public static void main(String[] args) {
-        // System.out.println(LocalDateTime.now());
-
         SpringApplication.run(App.class, args);
     }
 }

@@ -10,6 +10,7 @@
         <module>springmvc</module>
         <module>springboot</module>
         <module>diffDataBase</module>
+        <module>spring-boot-jsp</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -28,7 +29,6 @@
         <spring_version>4.3.9.RELEASE</spring_version>
         <spring_boot_version>1.5.4.RELEASE</spring_boot_version>
 
-        <!--<spring_boot_version>1.4.1.RELEASE</spring_boot_version>-->
         <!--<spring_boot_version>1.4.7.RELEASE</spring_boot_version>-->
         <log4j2_version>2.4.1</log4j2_version>
         <gson_version>2.3</gson_version>
@@ -64,18 +64,11 @@
 
     <dependencyManagement>
         <dependencies>
-
-            <!--<dependency>-->
-                <!--<groupId>mysql</groupId>-->
-                <!--<artifactId>mysql-connector-java</artifactId>-->
-                <!--<version>${mysql_version}</version>-->
-                <!--<scope>runtime</scope>-->
-            <!--</dependency>-->
-
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${javax_servlet_api_version}</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>javax.servlet.jsp</groupId>
@@ -83,7 +76,6 @@
                 <version>${javax_servlet_jsp-api_version}</version>
                 <scope>provided</scope>
             </dependency>
-
 
             <!--log4j2 start-->
             <dependency>
@@ -219,6 +211,17 @@
                 <version>${hibernate_version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons_beanutils_version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-collections</artifactId>
+                        <groupId>commons-collections</groupId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

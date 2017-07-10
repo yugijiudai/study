@@ -1,6 +1,4 @@
 spring:
-  profiles:
-    active: dev
   datasource:
       password: 111111
       username: root
@@ -12,6 +10,12 @@ spring:
       ddl-auto: update
     properties:
       dialect: org.hibernate.dialect.MySQL5Dialect
+  mvc:
+    view:
+#    页面默认前缀目录
+      prefix: /WEB-INF/jsp/
+#      响应页面默认后缀
+      suffix: .jsp
 
 druid:
     #连接池的配置信息

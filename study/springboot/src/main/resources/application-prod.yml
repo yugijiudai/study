@@ -1,7 +1,22 @@
 server:
-  port: 18080
-#  context-path: /girl]
+  port: 18081
+  tomcat:
+    uri-encoding: utf-8
+#  context-path: /girl
 girl:
   cupSize: H
   age: 15
 #content: "cupSize:${cupSize}, age:${age}"
+spring:
+  thymeleaf:
+     # 开发过程建议关闭缓存
+    cache: true
+  freemarker:
+    allow-request-override: true
+    cache: false
+    check-template-location: true
+    charset: UTF-8
+    content-type: text/html
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: false

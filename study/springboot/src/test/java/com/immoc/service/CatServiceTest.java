@@ -32,4 +32,9 @@ public class CatServiceTest {
         System.out.println(cat);
     }
 
+    @Test
+    public void findCatByCatNameTest() throws Exception {
+        Cat cat = catService.findCatByCatName("教主");
+        System.out.println(cat);
+    }
 }

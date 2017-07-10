@@ -1,8 +1,10 @@
 package com.immoc.service;
 
+import com.immoc.dao.CatDao;
 import com.immoc.dao.CatRepository;
 import com.immoc.pojo.Cat;
 
+import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -17,6 +19,9 @@ public class CatService {
     @Inject
     private CatRepository catRepository;
 
+    @Resource
+    private CatDao catDao;
+
 
     public Cat findByCatName(String catName) {
         return catRepository.findByCatName(catName);
@@ -24,5 +29,10 @@ public class CatService {
 
     public Cat findCatByQuery(String name) {
         return catRepository.findCatByQuery(name);
+    }
+
+
+    public Cat findCatByCatName(String catName){
+        return catDao.findCatByCatName(catName);
     }
 }

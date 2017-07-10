@@ -1,9 +1,13 @@
 package com.immoc.controller;
 
+import com.immoc.pojo.Cat;
+import com.immoc.service.CatService;
 import com.immoc.vo.DemoVo;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -14,6 +18,9 @@ import java.util.Date;
  */
 @RestController
 public class DemoController {
+
+    @Resource
+    private CatService catService;
 
 
     @GetMapping(value = "/getDemo")
@@ -27,5 +34,9 @@ public class DemoController {
     }
 
 
+    @GetMapping(value = "/{catName}/getCat")
+    public Cat getCat(@PathVariable("catName") String catName){
+        return catService.findCatByCatName(catName);
+    }
 
 }
