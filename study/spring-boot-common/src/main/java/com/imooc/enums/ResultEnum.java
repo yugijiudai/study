@@ -1,4 +1,4 @@
-package com.immoc.enums;
+package com.imooc.enums;
 
 /**
  * @author yugi

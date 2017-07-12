@@ -1,6 +1,6 @@
-package com.immoc.vo;
+package com.imooc.vo;
 
-import com.immoc.enums.ResultEnum;
+import com.imooc.enums.ResultEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

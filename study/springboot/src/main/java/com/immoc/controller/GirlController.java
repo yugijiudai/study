@@ -1,11 +1,11 @@
 package com.immoc.controller;
 
 import com.immoc.dao.GirlRepository;
-import com.immoc.enums.ResultEnum;
 import com.immoc.pojo.Girl;
 import com.immoc.service.GirlService;
-import com.immoc.util.ResultUtil;
-import com.immoc.vo.ResultVo;
+import com.imooc.enums.ResultEnum;
+import com.imooc.util.ResultUtil;
+import com.imooc.vo.ResultVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,6 +34,7 @@ public class GirlController {
 
     @Resource
     private GirlService girlService;
+
 
     /**
      * 查询所有女生列表
@@ -98,7 +99,7 @@ public class GirlController {
 
 
     @GetMapping(value = "/girls/{id}/getAge")
-    public void getAge(@PathVariable("id") Integer id){
+    public void getAge(@PathVariable("id") Integer id) {
         girlService.getAge(id);
     }
 

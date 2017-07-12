@@ -12,7 +12,7 @@ spring:
      # 开发过程建议关闭缓存
     cache: true
   freemarker:
-    allow-request-override: true
+    allow-request-override: false
     cache: true
     check-template-location: true
     charset: UTF-8

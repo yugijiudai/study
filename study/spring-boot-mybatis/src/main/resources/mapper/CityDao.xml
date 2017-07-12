@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.immoc.dao.CityDao">
+
+
+    <sql id="Base_Column_List">
+        id, city_name
+    </sql>
+
+    <select id="findCityById" resultType="City">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM city
+        WHERE id = #{id}
+    </select>
+
+    <!--获得自增主键-->
+    <insert id="saveCity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO city (city_name) VALUES (#{cityName})
+    </insert>
+</mapper>

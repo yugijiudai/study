@@ -1,14 +1,13 @@
 package com.immoc.exHandle;
 
-import com.immoc.enums.ResultEnum;
 import com.immoc.exception.GirlException;
-import com.immoc.util.ResultUtil;
-import com.immoc.vo.ResultVo;
+import com.imooc.enums.ResultEnum;
+import com.imooc.util.ResultUtil;
+import com.imooc.vo.ResultVo;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * <p>1.新建一个class</p>

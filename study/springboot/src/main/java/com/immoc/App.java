@@ -1,14 +1,13 @@
 package com.immoc;
 
-import com.alibaba.fastjson.support.config.FastJsonConfig;
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
+import com.imooc.config.MyJsonConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 
-import static com.alibaba.fastjson.serializer.SerializerFeature.PrettyFormat;
+// import org.mybatis.spring.annotation.MapperScan;
 
 /**
  * @author yugi
@@ -17,6 +16,9 @@ import static com.alibaba.fastjson.serializer.SerializerFeature.PrettyFormat;
  */
 @SpringBootApplication
 @ServletComponentScan
+// 扫描该包下相应的class,主要是mybatis的持久化类
+// @MapperScan("com.immoc.mapper")
+// @MapperScan("com.immoc.*.mapper")
 public class App {
 // public class App extends WebMvcConfigurerAdapter {
 
@@ -45,11 +47,7 @@ public class App {
      */
     @Bean
     public HttpMessageConverters fastJsonHttpMessageConverters() {
-        FastJsonHttpMessageConverter fastConvert = new FastJsonHttpMessageConverter();
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        fastJsonConfig.setSerializerFeatures(PrettyFormat);
-        fastConvert.setFastJsonConfig(fastJsonConfig);
-        return new HttpMessageConverters(fastConvert);
+        return new HttpMessageConverters(MyJsonConfig.getFastJsonHttpMessageConverter());
     }
 
 

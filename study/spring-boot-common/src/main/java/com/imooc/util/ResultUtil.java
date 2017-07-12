@@ -1,7 +1,8 @@
-package com.immoc.util;
+package com.imooc.util;
 
-import com.immoc.enums.ResultEnum;
-import com.immoc.vo.ResultVo;
+
+import com.imooc.enums.ResultEnum;
+import com.imooc.vo.ResultVo;
 
 /**
  * @author yugi
