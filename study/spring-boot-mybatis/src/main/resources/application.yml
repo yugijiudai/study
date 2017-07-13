@@ -8,6 +8,24 @@ spring:
       username: root
       url: jdbc:mysql://localhost:3306/dbgirl?useUnicode=true&&characterEncoding=utf8
       driver-class-name: com.mysql.jdbc.Driver
+  redis:
+#  Redis数据库索引（默认为0）
+    database: 0
+    host: localhost
+    port: 6379
+    password:
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 0
+
+
+#      关闭tomcat启动的logo
+#  main:
+#    banner-mode: "off"
+
 druid:
     #连接池的配置信息
     url: ${spring.datasource.url}
@@ -39,5 +57,4 @@ mybatis:
   config-location: classpath:mybatis-config.xml
   type-aliases-package: com.immoc.pojo
   mapper-locations: classpath:mapper/*.xml
-
 

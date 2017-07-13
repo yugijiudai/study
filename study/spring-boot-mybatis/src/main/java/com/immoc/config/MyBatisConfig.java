@@ -1,21 +1,19 @@
 package com.immoc.config;
 
 import com.github.pagehelper.PageHelper;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Properties;
 
 /**
  * @author yugi
- * @apiNote
+ * @apiNote pageHelper换成5.0.0这个类就不需要了, 但要多依赖一个pagehelper-spring-boot-starter
  * @since 2017-07-12
  */
-@Configuration
+// @Configuration
 public class MyBatisConfig {
 
 
-    @Bean
+    // @Bean
     public PageHelper pageHelper() {
         PageHelper pageHelper = new PageHelper();
         Properties properties = new Properties();

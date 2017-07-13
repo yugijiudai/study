@@ -1,6 +1,7 @@
 package com.immoc;
 
 import com.imooc.config.MyJsonConfig;
+import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
@@ -31,6 +32,10 @@ public class MyBatisApp {
 
 
     public static void main(String[] args) {
+        //关掉springboot logo
+        // SpringApplication app = new SpringApplication(MyBatisApp.class);
+        // app.setBannerMode(Banner.Mode.OFF);
+        // app.run(args);
         SpringApplication.run(MyBatisApp.class, args);
     }
 }
