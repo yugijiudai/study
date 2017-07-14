@@ -27,18 +27,17 @@ allprojects {
 
 subprojects {
     repositories {
-//        使用私服
-        maven {url ''}
         mavenLocal()
+//        使用私服
+        maven {url 'http://maven.aliyun.com/nexus/content/groups/public'}
         mavenCentral()
     }
     ext.springVersion = '4.3.9.RELEASE'
-    ext.log4j2Version = '2.4.1'
     dependencies {
         testCompile "junit:junit:4.12"
         testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
         runtime group: 'mysql', name: 'mysql-connector-java', version: '5.1.10'
-        compile 'org.apache.logging.log4j:log4j-web:' + log4j2Version
+        compile 'org.apache.logging.log4j:log4j-web:2.7'
         compile group: 'org.projectlombok', name: 'lombok', version: '1.16.10'
         compile group: 'com.alibaba', name: 'druid', version: '1.0.25'
     }

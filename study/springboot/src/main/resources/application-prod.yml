@@ -11,6 +11,7 @@ spring:
   thymeleaf:
      # 开发过程建议关闭缓存
     cache: true
+    mode: LEGACYHTML5
   freemarker:
     allow-request-override: false
     cache: true

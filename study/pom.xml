@@ -36,6 +36,7 @@
         <pagehelper_version>5.0.0</pagehelper_version>
         <!--<pagehelper_version>4.1.0</pagehelper_version>-->
         <spring_boot_starter_data_redis_version>1.5.4.RELEASE</spring_boot_starter_data_redis_version>
+        <nekohtml_version>1.9.22</nekohtml_version>
 
         <!--<spring_boot_version>1.4.7.RELEASE</spring_boot_version>-->
         <log4j2_version>2.4.1</log4j2_version>
@@ -202,6 +203,12 @@
                 <scope>import</scope>
             </dependency>
 
+            <!--spring-boot的thymeleaf支持标签不闭合-->
+            <dependency>
+                <groupId>net.sourceforge.nekohtml</groupId>
+                <artifactId>nekohtml</artifactId>
+                <version>${nekohtml_version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.hibernate</groupId>
