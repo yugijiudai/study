@@ -20,7 +20,7 @@ public class JMSUtil {
 
     public static final String URL = ActiveMQConnection.DEFAULT_BROKER_URL;
     // 发送消息的数量
-    public static final int SEND_NUM = 10;
+    public static final int SEND_NUM = 100;
 
     public static Connection getJMSConnection(){
         // 实例化连接工厂

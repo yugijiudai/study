@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd">
+
+    <import resource="common.xml"/>
+
+    <!--这个要继承MessageListener start-->
+    <!--配置监听器-->
+    <!--<bean id="consumerMessageListenerXml" class="com.immoc.jms.consumer.ConsumerMessageListenerXml"/>-->
+    <!--&lt;!&ndash;配置消息容器&ndash;&gt;-->
+    <!--<bean id="jmsContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">-->
+        <!--<property name="connectionFactory" ref="connectionFactory"/>-->
+        <!--&lt;!&ndash;主题模式&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="destination" ref="topicDestination"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;队列模式&ndash;&gt;-->
+        <!--<property name="destination" ref="queueDestination"/>-->
+        <!--<property name="messageListener" ref="consumerMessageListenerXml"/>-->
+    <!--</bean>-->
+    <!--这个要继承MessageListener end-->
+
+
+    <!--这个不用继承-->
+    <!-- 配置一个通用的JMS监听容器 -->
+    <bean id="jmsListenerContainerFactory" class="org.springframework.jms.config.DefaultJmsListenerContainerFactory">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <!--true表示主题模式,false表示队列模式,默认是false-->
+        <property name="pubSubDomain" value="false"/>
+    </bean>
+    <!-- 支持@JmsListener自动启动监听器,<jms:annotation-driven>默认是使用jmsListenerContainerFactory，所以配置中可以不用指定 -->
+    <jms:annotation-driven/>
+
+</beans>

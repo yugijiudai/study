@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <import resource="common.xml"/>
+    <!--注意:生产者这里不能引入消费者的xml,因为消费者那里配置了监听器,不然生产者也会监听得到,这样就会变成监听两份了-->
+
+
+</beans>

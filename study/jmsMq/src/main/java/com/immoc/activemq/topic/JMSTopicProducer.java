@@ -39,7 +39,7 @@ public class JMSTopicProducer {
         for (int i = 0; i < JMSUtil.SEND_NUM; i++) {
             try {
                 TextMessage message = session.createTextMessage("hello world:" + i);
-                System.out.println("发布的消息--hello world:" + i);
+                System.out.println("发布的消息-" + message.getText());
                 messageProducer.send(message);
             }
             catch (JMSException e) {

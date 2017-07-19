@@ -27,7 +27,7 @@ public class JMSTopicConsumer1 {
             Destination destination = session.createTopic(JMSConstant.TOPIC_NAME);
             // 消息的消费者
             MessageConsumer messageConsumer = session.createConsumer(destination);
-            //关闭连接!!!!不然无法接收
+            //不要关闭连接!!!!不然无法接收
             messageConsumer.setMessageListener(message -> {
                 try {
                     System.out.println("订阅者1收到的消息:" + ((TextMessage) message).getText());

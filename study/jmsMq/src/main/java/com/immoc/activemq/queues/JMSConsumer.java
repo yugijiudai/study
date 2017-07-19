@@ -6,7 +6,9 @@ import com.immoc.activemq.util.JMSUtil;
 import javax.jms.Connection;
 import javax.jms.Destination;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
@@ -28,11 +30,22 @@ public class JMSConsumer {
             // 消息的消费者
             MessageConsumer messageConsumer = session.createConsumer(destination);
             // consumer(messageConsumer);
-            //关闭连接!!!!不然无法接收
-            messageConsumer.setMessageListener(new JMSListener());
+            //
+            messageConsumer.setMessageListener(new MessageListener() {
+                @Override
+                public void onMessage(Message message) {
+                    try {
+                        System.out.println("收到的消息:" + ((TextMessage) message).getText());
+                    }
+                    catch (JMSException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
         catch (Exception e) {
             e.printStackTrace();
+            // 不能关闭连接!!!!不然无法接收
             JMSUtil.closeConnection(connection);
         }
     }

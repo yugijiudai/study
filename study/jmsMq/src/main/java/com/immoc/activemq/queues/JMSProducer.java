@@ -42,8 +42,8 @@ public class JMSProducer {
         for (int i = 0; i < JMSUtil.SEND_NUM; i++) {
             try {
                 TextMessage message = session.createTextMessage("hello world:" + i);
-                System.out.println("发送消息--hello world:" + i);
                 messageProducer.send(message);
+                System.out.println("发送消息-" + message.getText());
             }
             catch (JMSException e) {
                 e.printStackTrace();
