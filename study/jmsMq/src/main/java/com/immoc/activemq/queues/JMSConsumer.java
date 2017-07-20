@@ -19,10 +19,12 @@ import javax.jms.TextMessage;
  */
 public class JMSConsumer {
 
+    public static final String URL = "failover:(tcp://localhost:61616,tcp://localhost:61617,tcp://localhost:61618)?randomize=true";
+
     public static void main(String[] args) {
         Connection connection = null;
         try {
-            connection = JMSUtil.getJMSConnection();
+            connection = JMSUtil.getJMSConnection(URL);
             // 不加事务
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             // 创建连接的消息队列,这个名称要和生产者一样

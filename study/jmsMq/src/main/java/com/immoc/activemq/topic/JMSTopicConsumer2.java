@@ -1,6 +1,7 @@
 package com.immoc.activemq.topic;
 
 import com.immoc.activemq.constants.JMSConstant;
+import com.immoc.activemq.queues.JMSConsumer;
 import com.immoc.activemq.util.JMSUtil;
 
 import javax.jms.Connection;
@@ -20,7 +21,7 @@ public class JMSTopicConsumer2 {
     public static void main(String[] args) {
         Connection connection = null;
         try {
-            connection = JMSUtil.getJMSConnection();
+            connection = JMSUtil.getJMSConnection(JMSConsumer.URL);
             // 不加事务
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             // 创建连接的消息队列,这个名称要和生产者一样

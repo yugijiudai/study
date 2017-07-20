@@ -17,10 +17,13 @@ import javax.jms.TextMessage;
  */
 public class JMSProducer {
 
+    public static final String URL = "failover:(tcp://localhost:61617,tcp://localhost:61618)?randomize=true";
+
     public static void main(String[] args) {
         Connection connection = null;
         try {
-            connection = JMSUtil.getJMSConnection();
+            connection = JMSUtil.getJMSConnection(URL);
+            // connection = JMSUtil.getJMSConnection(JMSUtil.URL);
             // 会话接收或者发送信息的线程,true是添加事务
             Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
             // 创建消息队列,消息的目的地

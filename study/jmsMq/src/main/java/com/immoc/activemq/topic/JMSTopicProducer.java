@@ -1,6 +1,7 @@
 package com.immoc.activemq.topic;
 
 import com.immoc.activemq.constants.JMSConstant;
+import com.immoc.activemq.queues.JMSProducer;
 import com.immoc.activemq.util.JMSUtil;
 
 import javax.jms.Connection;
@@ -20,7 +21,7 @@ public class JMSTopicProducer {
     public static void main(String[] args) {
         Connection connection = null;
         try {
-            connection = JMSUtil.getJMSConnection();
+            connection = JMSUtil.getJMSConnection(JMSProducer.URL);
             Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createTopic(JMSConstant.TOPIC_NAME);
             MessageProducer messageProducer = session.createProducer(destination);
