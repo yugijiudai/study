@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.myGenerator.mapper.SeckillMapper">
+
+	<resultMap id="SeckillResult" type="org.myGenerator.pojo.Seckill">
+		<result property="seckillId" column="SECKILL_seckill_id" />
+		<result property="name" column="SECKILL_name" />
+		<result property="number" column="SECKILL_number" />
+		<result property="createTime" column="SECKILL_create_time" />
+		<result property="startTime" column="SECKILL_start_time" />
+		<result property="endTime" column="SECKILL_end_time" />
+	</resultMap>
+
+
+    <sql id="querySeckillResult">
+		seckill.seckill_id AS SECKILL_seckill_id,
+		seckill.name AS SECKILL_name,
+		seckill.number AS SECKILL_number,
+		seckill.create_time AS SECKILL_create_time,
+		seckill.start_time AS SECKILL_start_time,
+		seckill.end_time AS SECKILL_end_time
+    </sql>
+
+
+	<insert id="addSeckill" parameterType="org.myGenerator.pojo.Seckill" useGeneratedKeys= "true"  keyProperty= "seckillId" >
+		INSERT INTO seckill (name, number, create_time, start_time, end_time)
+		VALUES (#{name, jdbcType=VARCHAR}, #{number, jdbcType=INTEGER}, #{createTime, jdbcType=TIMESTAMP}, #{startTime, jdbcType=TIMESTAMP}, #{endTime, jdbcType=TIMESTAMP})
+	</insert>
+
+	<select id="getSeckillById" resultMap="SeckillResult">
+		SELECT
+        <include refid="querySeckillResult"/>
+		FROM seckill AS seckill
+        <if test="id != null and id != ''">
+		WHERE seckill.seckill_id = #{id}
+		</if>
+	</select>
+	
+	<update id="updateSeckill" parameterType="org.myGenerator.pojo.Seckill">
+		UPDATE seckill
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="name!=null">
+				name=#{name, jdbcType=VARCHAR}, 
+			</if>
+			<if test="number!=null">
+				number=#{number, jdbcType=INTEGER}, 
+			</if>
+			<if test="createTime!=null">
+				create_time=#{createTime, jdbcType=TIMESTAMP}, 
+			</if>
+			<if test="startTime!=null">
+				start_time=#{startTime, jdbcType=TIMESTAMP}, 
+			</if>
+			<if test="endTime!=null">
+				end_time=#{endTime, jdbcType=TIMESTAMP}
+			</if>
+        </trim>
+		WHERE seckill_id = #{seckillId}
+	</update>
+	
+	<delete id="removeSeckill">
+		DELETE FROM seckill
+		WHERE seckill_id = #{id}
+	</delete>
+
+
+
+</mapper>
