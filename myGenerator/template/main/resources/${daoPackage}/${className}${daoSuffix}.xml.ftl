@@ -13,15 +13,16 @@
 <#--<mapper namespace="${className}">-->
 
 	<resultMap id="${className}Result" type="${basepackage}.${subpackage}.${pojoPackage}.${className}">
-		<#list allColumns as column>
-		<result property="${column.columnNameLower}" column="${sqlNameUpper}_${column.sqlName}" />
+		<id property="${table.idColumn.sqlName}" column="${sqlNameLower}_${table.idColumn.columnNameLower}"/>
+		<#list columns as column>
+		<result property="${column.columnNameLower}" column="${sqlNameLower}_${column.sqlName}" />
 		</#list>
 	</resultMap>
 
 
     <sql id="query${className}Result">
 	<#list allColumns as column>
-		${sqlNameLower}.${column.sqlName} AS ${sqlNameUpper}_${column.sqlName}<#if column_has_next>,</#if>
+		${sqlNameLower}.${column.sqlName} AS ${sqlNameLower}_${column.sqlName}<#if column_has_next>,</#if>
 	</#list>
     </sql>
 

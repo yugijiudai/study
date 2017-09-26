@@ -2,15 +2,17 @@
 <#assign classNameLower = className?uncap_first>
 package ${basepackage}.${subpackage}.service.impl;
 
-import org.springframework.stereotype.Service;
-
+import lombok.extern.<#if loggerType ? contains("Log4j")>log4j<#else>slf4j</#if>.${loggerType};
+import ${basepackage}.${subpackage}.${daoPackage}.${className}${daoSuffix};
 import ${basepackage}.${subpackage}.${pojoPackage}.${className};
 import ${basepackage}.${subpackage}.service.${className}Service;
-import ${basepackage}.${subpackage}.${daoPackage}.${className}${daoSuffix};
+import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 
 @Service("${classNameLower}ServiceImpl")
-public class ${className}ServiceImpl implements ${className}Service{
+@${loggerType}
+public class ${className}ServiceImpl implements ${className}Service {
 
     @Resource
     private ${className}${daoSuffix} ${classNameLower}${daoSuffix};
