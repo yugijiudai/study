@@ -14,7 +14,7 @@ import org.quartz.impl.StdSchedulerFactory;
 public class TaskUtilTest {
 
     private static TaskBo getTaskBo(String jobName, String taskGroup, String trigger) {
-        int time = 2;
+        int time = 1;
         int count = 10;
         return new TaskBo(jobName, taskGroup, time, count, trigger, MyTask.class);
     }
@@ -30,8 +30,7 @@ public class TaskUtilTest {
         Thread.sleep(2000);
         TaskUtil.restartJob(scheduler, taskBo);
         Thread.sleep(2000);
-        taskBo.setTime(1);
-        taskBo.setRepeatCount(15);
+        taskBo.setTime(1).setRepeatCount(11);
         TaskUtil.modifyJobTime(scheduler, taskBo);
         Thread.sleep(3000);
         TaskUtil.shutdown(scheduler);

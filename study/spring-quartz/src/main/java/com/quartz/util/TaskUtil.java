@@ -2,7 +2,7 @@ package com.quartz.util;
 
 import com.quartz.bo.TaskBo;
 import com.quartz.constant.TaskUnitEnum;
-import lombok.Value;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
@@ -20,7 +20,7 @@ import org.quartz.impl.triggers.SimpleTriggerImpl;
  * @apiNote Quartz调度管理器(任务名字一样时, 任务组名字和触发器名字一定要不同, 不然会当成同一个任务)
  * @since 2017-09-28
  */
-@Value
+@UtilityClass
 @Slf4j
 public class TaskUtil {
 
@@ -31,20 +31,19 @@ public class TaskUtil {
      * @param scheduler 调度器
      * @param taskBo    {@link TaskBo}
      */
-    public static void addJob(Scheduler scheduler, TaskBo taskBo) {
+    public void addJob(Scheduler scheduler, TaskBo taskBo) {
         try {
             String jobName = taskBo.getJobName();
             JobDetail jobDetail = JobBuilder.newJob(taskBo.getClazz()).withIdentity(jobName, taskBo.getJobGroup()).build();
             SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule();
-            setTriggerTime(taskBo, simpleScheduleBuilder);
-            SimpleScheduleBuilder sc = simpleScheduleBuilder.withRepeatCount(taskBo.getRepeatCount() - 1);
+            SimpleScheduleBuilder sc = setTriggerTime(taskBo, simpleScheduleBuilder);
             // 触发器
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, taskBo.getTriggerGroup()).withSchedule(sc).build();
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, taskBo.getTrigger()).withSchedule(sc).build();
             scheduler.scheduleJob(jobDetail, trigger);
             startScheduler(scheduler);
         }
         catch (ObjectAlreadyExistsException e) {
-            log.warn("已经存在任务【groupName:{}-taskName:{}-trigger:{}】,请不要重复添加", taskBo.getJobGroup(), taskBo.getJobName(), taskBo.getTriggerGroup());
+            log.warn("已经存在任务【groupName:{}-taskName:{}-trigger:{}】,请不要重复添加", taskBo.getJobGroup(), taskBo.getJobName(), taskBo.getTrigger());
         }
         catch (Exception e) {
             log.error(e.getMessage());
@@ -59,18 +58,22 @@ public class TaskUtil {
      * @param scheduler 调度器
      * @param taskBo    {@link TaskBo}
      */
-    public static void modifyJobTime(Scheduler scheduler, TaskBo taskBo) {
+    public void modifyJobTime(Scheduler scheduler, TaskBo taskBo) {
         try {
             Trigger trigger = scheduler.getTrigger(TaskHolder.getTriggerKey(taskBo));
             if (trigger == null) {
                 return;
             }
-            long repeatInterval = ((SimpleTriggerImpl) trigger).getRepeatInterval() / 1000;
-            if (repeatInterval != taskBo.getTime()) {
-                removeJob(scheduler, taskBo);
-                addJob(scheduler, taskBo);
-                log.info("任务修改成功,重新开始任务{}", taskBo);
+            SimpleTriggerImpl simpleTrigger = (SimpleTriggerImpl) trigger;
+            long repeatInterval = simpleTrigger.getRepeatInterval() / 1000;
+            int repeatCount = simpleTrigger.getRepeatCount() + 1;
+            if (repeatInterval == taskBo.getTime() && repeatCount == taskBo.getRepeatCount()) {
+                log.warn("修改失败!时间或者间隔没改变,repeatInterval:【{}】,repeatCount:【{}】,{}", repeatInterval, repeatCount, taskBo);
+                return;
             }
+            removeJob(scheduler, taskBo);
+            addJob(scheduler, taskBo);
+            log.info("任务修改成功,重新开始任务{}", taskBo);
         }
         catch (Exception e) {
             log.error(e.getMessage());
@@ -84,7 +87,7 @@ public class TaskUtil {
      * @param scheduler 调度器
      * @param taskBo    {@link TaskBo}
      */
-    public static void removeJob(Scheduler scheduler, TaskBo taskBo) {
+    public void removeJob(Scheduler scheduler, TaskBo taskBo) {
         try {
             TriggerKey triggerKey = TaskHolder.getTriggerKey(taskBo);
             // 停止触发器
@@ -108,7 +111,7 @@ public class TaskUtil {
      * @param scheduler 调度器
      * @param taskBo    {@link TaskBo}
      */
-    public static void pauseJob(Scheduler scheduler, TaskBo taskBo) {
+    public void pauseJob(Scheduler scheduler, TaskBo taskBo) {
         JobKey jobKey = TaskHolder.getJobKey(taskBo);
         try {
             scheduler.pauseJob(jobKey);
@@ -126,7 +129,7 @@ public class TaskUtil {
      * @param scheduler 调度器
      * @param taskBo    {@link TaskBo}
      */
-    public static void restartJob(Scheduler scheduler, TaskBo taskBo) {
+    public void restartJob(Scheduler scheduler, TaskBo taskBo) {
         JobKey jobKey = TaskHolder.getJobKey(taskBo);
         try {
             scheduler.resumeJob(jobKey);
@@ -144,7 +147,7 @@ public class TaskUtil {
      * @param scheduler 调度器
      * @param taskBo    {@link TaskBo}
      */
-    public static void pauseTrigger(Scheduler scheduler, TaskBo taskBo) {
+    public void pauseTrigger(Scheduler scheduler, TaskBo taskBo) {
         TriggerKey triggerKey = TaskHolder.getTriggerKey(taskBo);
         try {
             scheduler.pauseTrigger(triggerKey);
@@ -162,7 +165,7 @@ public class TaskUtil {
      * @param scheduler 调度器
      * @param taskBo    {@link TaskBo}
      */
-    public static void restartTrigger(Scheduler scheduler, TaskBo taskBo) {
+    public void restartTrigger(Scheduler scheduler, TaskBo taskBo) {
         TriggerKey triggerKey = TaskHolder.getTriggerKey(taskBo);
         try {
             scheduler.resumeTrigger(triggerKey);
@@ -180,7 +183,7 @@ public class TaskUtil {
      *
      * @param scheduler 调度器
      */
-    private static void startScheduler(Scheduler scheduler) {
+    private void startScheduler(Scheduler scheduler) {
         try {
             scheduler.start();
             log.debug("开启调度器成功");
@@ -192,12 +195,12 @@ public class TaskUtil {
     }
 
     /**
-     * 设置调度器执行的时间
+     * 设置调度器执行的时间和执行次数
      *
      * @param taskBo                {@link TaskBo}
      * @param simpleScheduleBuilder {@link SimpleScheduleBuilder}
      */
-    private static void setTriggerTime(TaskBo taskBo, SimpleScheduleBuilder simpleScheduleBuilder) {
+    private SimpleScheduleBuilder setTriggerTime(TaskBo taskBo, SimpleScheduleBuilder simpleScheduleBuilder) {
         TaskUnitEnum taskUnit = taskBo.getTaskUnitEnum();
         switch (taskUnit) {
             case HOUR:
@@ -213,13 +216,15 @@ public class TaskUtil {
                 simpleScheduleBuilder.withIntervalInSeconds(taskBo.getTime());
                 break;
         }
+        return taskBo.getRepeatCount() > 0 ? simpleScheduleBuilder.withRepeatCount(taskBo.getRepeatCount() - 1) : simpleScheduleBuilder.repeatForever();
     }
 
     /**
      * 关闭调度器
+     *
      * @param scheduler 调度器
      */
-    public static void shutdown(Scheduler scheduler) {
+    public void shutdown(Scheduler scheduler) {
         try {
             log.warn("开始关闭调度器");
             if (!scheduler.isShutdown()) {
@@ -233,14 +238,15 @@ public class TaskUtil {
         }
     }
 
-    private static class TaskHolder {
+    @UtilityClass
+    private class TaskHolder {
 
-        private static JobKey getJobKey(TaskBo taskBo) {
+        private JobKey getJobKey(TaskBo taskBo) {
             return new JobKey(taskBo.getJobName(), taskBo.getJobGroup());
         }
 
-        private static TriggerKey getTriggerKey(TaskBo taskBo) {
-            return new TriggerKey(taskBo.getJobName(), taskBo.getTriggerGroup());
+        private TriggerKey getTriggerKey(TaskBo taskBo) {
+            return new TriggerKey(taskBo.getJobName(), taskBo.getTrigger());
         }
 
     }
