@@ -12,3 +12,6 @@
 /study/springmvc/springmvc.iml
 /study/jmsMq/*.iml
 /myGenerator/myGenerator.iml
+/study/springboot/target
+/study/spring-boot-common/target
+/study/springmvc/target
