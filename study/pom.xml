@@ -13,6 +13,7 @@
         <module>spring-boot-jsp</module>
         <module>spring-boot-mybatis</module>
         <module>spring-boot-common</module>
+        <module>spring-dwz</module>
         <module>jmsMq</module>
     </modules>
     <packaging>pom</packaging>

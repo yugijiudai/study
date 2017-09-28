@@ -1,0 +1,55 @@
+<h2 class="contentTitle">编辑器/日历</h2>
+
+
+<div class="pageContent">
+    <!--required-validate表示开启验证,如果这个是弹窗，validateCallback要加dialogAjaxDone，callbackType要是closeCurrent-->
+    <form method="post" action="ajaxDone.html" class="pageForm required-validate"
+          onsubmit="return validateCallback(this, dialogAjaxDone)">
+        <div class="pageFormContent nowrap" layoutH="97">
+            <dl>
+                <dt>编辑器:</dt>
+                <dd>
+                    <textarea class="editor" tools="simple" cols="80" rows="10" name="content"
+                              upImgUrl="upload.php" upImgExt="jpg,jpeg,gif,png"></textarea>
+                </dd>
+            </dl>
+            <dl>
+                <dt>日历控件的使用:</dt>
+                <dd>
+                    <input type="text" name="dd" class="date" readonly="true" dateFmt="yyyy年MM月dd日"/>
+                    <a class="inputDateButton" href="javascript:;">选择</a>
+                </dd>
+            </dl>
+            <dl>
+                <dt>学历:</dt>
+                <dd>
+                    <select name="xx" class="combox">
+                        <option value="1">中学</option>
+                        <option value="2">高中</option>
+                        <option value="3">大专</option>
+                        <option value="4">本科</option>
+                    </select>
+                </dd>
+            </dl>
+        </div>
+        <div class="formBar">
+            <ul>
+                <li>
+                    <div class="buttonActive">
+                        <div class="buttonContent">
+                            <button type="submit">提交</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="button">
+                        <div class="buttonContent">
+                            <button type="button" class="close">取消</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </form>
+
+</div>

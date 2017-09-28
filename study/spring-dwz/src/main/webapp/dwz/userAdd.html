@@ -1,0 +1,51 @@
+<h2 class="contentTitle">添加用户信息</h2>
+
+
+<div class="pageContent">
+	<!--required-validate表示开启验证,如果这个是弹窗，validateCallback要加dialogAjaxDone，callbackType要是closeCurrent-->
+	<form method="post" action="ajaxDone.html" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone)">
+		<div class="pageFormContent nowrap" layoutH="97">
+			<dl>
+				<dt>用户名:</dt>
+				<dd>
+					<input type="text" name="name" maxlength="20" class="required" />
+				</dd>
+			</dl>
+			<dl>
+				<dt>性别:</dt>
+				<dd>
+					<input type="radio" name="sex" value="1"/>男
+					<input type="radio" name="sex" value="0"/>女
+				</dd>
+			</dl>
+			<dl>
+				<dt>年龄:</dt>
+				<dd>
+					<input type="text" name="age" maxlength="2" class="digits"/>
+				</dd>
+			</dl>
+			<dl>
+				<dt>email:</dt>
+				<dd>
+					<input type="text" name="email" maxlength="20"/>
+					<!--<input type="text" name="email" maxlength="20" class="required email" />-->
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">提交</button></div></div></li>
+				<li><div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div></li>
+			</ul>
+		</div>
+	</form>
+	
+</div>
+
+
+<script type="text/javascript">
+function customvalidXxx(element){
+	if ($(element).val() == "xxx") return false;
+	return true;
+}
+</script>

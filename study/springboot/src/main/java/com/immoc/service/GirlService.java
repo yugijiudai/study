@@ -33,7 +33,7 @@ public class GirlService {
     }
 
 
-    public void getAge(Integer id) {
+    public Girl getAge(Integer id) {
         Girl girl = girlRepository.findOne(id);
         Integer age = girl.getAge();
         if (age < 13) {
@@ -43,6 +43,7 @@ public class GirlService {
         if (age > 13 && age < 17) {
             throw new GirlException(ResultEnum.JK);
         }
+        return girl;
     }
 
     /**

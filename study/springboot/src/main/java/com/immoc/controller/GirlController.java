@@ -99,8 +99,8 @@ public class GirlController {
 
 
     @GetMapping(value = "/girls/{id}/getAge")
-    public void getAge(@PathVariable("id") Integer id) {
-        girlService.getAge(id);
+    public ResultVo getAge(@PathVariable("id") Integer id) {
+        return ResultUtil.buildSuccess(girlService.getAge(id));
     }
 
 }
