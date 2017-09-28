@@ -5,7 +5,7 @@
     <parent>
         <artifactId>study</artifactId>
         <groupId>com.immoc.demo</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
         <!--继承的绝对路径是pom的文件-->
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -14,7 +14,7 @@
     <name>spring-boot-mybatis</name>
     <artifactId>spring-boot-mybatis</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${spring-boot-mybatis_version}</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.immoc.demo</groupId>
             <artifactId>spring-boot-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${spring-boot-common_version}</version>
         </dependency>
 
         <!--mybatis分页拦截器-->

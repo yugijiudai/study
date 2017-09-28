@@ -5,7 +5,7 @@
     <parent>
         <artifactId>study</artifactId>
         <groupId>com.immoc.demo</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
         <!--继承的绝对路径是pom的文件-->
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -14,13 +14,13 @@
     <name>spring-boot-jsp</name>
     <artifactId>spring-boot-jsp</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${spring-boot-jsp_version}</version>
 
     <dependencies>
         <dependency>
             <groupId>com.immoc.demo</groupId>
             <artifactId>spring-boot-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${spring-boot-common_version}</version>
         </dependency>
 
         <dependency>
