@@ -6,6 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 // import org.mybatis.spring.annotation.MapperScan;
 
@@ -50,6 +53,28 @@ public class App {
         return new HttpMessageConverters(MyJsonConfig.getFastJsonHttpMessageConverter());
     }
 
+    /**
+     * 处理跨域
+     * @return
+     */
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("*")
+                        .allowedMethods("PUT", "DELETE", "GET", "POST", "OPTIONS")
+                        .allowedHeaders("*")
+                        .exposedHeaders("access-control-allow-headers",
+                                "access-control-allow-methods",
+                                "access-control-allow-origin",
+                                "access-control-max-age",
+                                "X-Frame-Options")
+                        .allowCredentials(false).maxAge(3600);
+            }
+        };
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(App.class, args);
