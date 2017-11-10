@@ -14,8 +14,16 @@
         WHERE id = #{id}
     </select>
 
+    <select id="getCities" resultType="com.immoc.pojo.City">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM city
+    </select>
+
     <!--获得自增主键-->
     <insert id="saveCity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO city (city_name) VALUES (#{cityName})
     </insert>
+
+
 </mapper>

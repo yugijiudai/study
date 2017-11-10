@@ -5,6 +5,7 @@ import com.immoc.pojo.City;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author yugi
@@ -23,5 +24,9 @@ public class CityService {
 
     public City findCityById(Long id){
         return cityDao.findCityById(id);
+    }
+
+    public List<City> getCities() {
+        return cityDao.getCities();
     }
 }
