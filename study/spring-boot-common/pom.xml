@@ -72,6 +72,12 @@
             <artifactId>commons-beanutils</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3_version}</version>
+        </dependency>
+
 
     </dependencies>
     <build>

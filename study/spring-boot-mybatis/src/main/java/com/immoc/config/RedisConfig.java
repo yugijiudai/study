@@ -3,6 +3,11 @@ package com.immoc.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import org.redisson.config.SingleServerConfig;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -14,6 +19,10 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+import javax.annotation.Resource;
 
 /**
  * @author yugi
@@ -24,6 +33,9 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 @EnableCaching
 public class RedisConfig extends CachingConfigurerSupport {
 
+
+    @Resource
+    private RedisProperties redisProperties;
 
     @Bean
     public KeyGenerator keyGenerator() {
@@ -58,6 +70,28 @@ public class RedisConfig extends CachingConfigurerSupport {
         template.setValueSerializer(jackson2JsonRedisSerializer);
         template.afterPropertiesSet();
         return template;
+    }
+
+
+    @Bean
+    public RedissonClient redissonClient() {
+        Config config = new Config();
+        SingleServerConfig serverConfig = config.useSingleServer()
+                .setAddress(redisProperties.getRedissonUrl())
+                .setTimeout(redisProperties.getTimeout())
+                .setConnectionPoolSize(redisProperties.getConnectionPoolSize())
+                .setConnectionMinimumIdleSize(redisProperties.getConnectionMinimumIdleSize());
+        if (StringUtils.isNotBlank(redisProperties.getRedissonPassword())) {
+            serverConfig.setPassword(redisProperties.getRedissonPassword());
+        }
+        return Redisson.create(config);
+
+    }
+
+    @Bean
+    public JedisPool getJedisPool() {
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        return new JedisPool(poolConfig, "localhost", 6379, 5000, null);
     }
 
 }

@@ -16,11 +16,18 @@ spring:
     password:
     pool:
       max-active: 8
-      max-wait: -1
+      max-wait: 10000
       max-idle: 8
       min-idle: 0
-    timeout: 0
+    timeout: 10000
 
+
+
+redisson:
+  url: redis://localhost:6379
+  password:
+  connectionPoolSize: 64
+  connectionMinimumIdleSize: 10
 
 #      关闭tomcat启动的logo
 #  main:

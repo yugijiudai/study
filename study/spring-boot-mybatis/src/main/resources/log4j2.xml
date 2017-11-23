@@ -45,7 +45,7 @@
     <Loggers>
         <!--默认加载的日志-->
         <Root level="TRACE">
-            <AppenderRef ref="Console" level="TRACE"/>
+            <AppenderRef ref="Console" level="WARN"/>
             <AppenderRef ref="DevLog" level="INFO"/>
             <AppenderRef ref="SqlLog" level="TRACE"/>
             <AppenderRef ref="ErrorLog" level="ERROR"/>

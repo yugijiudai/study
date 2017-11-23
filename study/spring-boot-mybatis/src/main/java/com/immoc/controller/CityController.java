@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.immoc.pojo.City;
 import com.immoc.service.CityService;
+import com.immoc.vo.PageVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +33,7 @@ public class CityController {
     public Object getCities() {
         Page<City> page = PageHelper.startPage(1, 2);
         cityService.getCities();
-        return page.toPageInfo();
+        return new PageVo<>(page);
     }
 
 }
