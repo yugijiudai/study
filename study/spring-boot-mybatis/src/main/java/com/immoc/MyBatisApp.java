@@ -22,15 +22,6 @@ import org.springframework.context.annotation.Bean;
 public class MyBatisApp {
 
 
-    /**
-     * 在这里我们使用@Bean注入HttpMessageConverter
-     */
-    @Bean
-    public HttpMessageConverters fastJsonHttpMessageConverters() {
-        return new HttpMessageConverters(MyJsonConfig.getFastJsonHttpMessageConverter());
-    }
-
-
     public static void main(String[] args) {
         //关掉springboot logo
         // SpringApplication app = new SpringApplication(MyBatisApp.class);

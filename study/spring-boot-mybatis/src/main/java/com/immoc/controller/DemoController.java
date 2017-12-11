@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,5 +53,10 @@ public class DemoController {
         }
         session.setAttribute("uid", uid);
         return session.getId();
+    }
+
+    @GetMapping(value = "/getDemo")
+    public Demo getDemo() {
+        return new Demo().setCreateTime(new Date()).setName("");
     }
 }
