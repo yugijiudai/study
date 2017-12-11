@@ -1,14 +1,18 @@
 package com.immoc;
 
 import com.imooc.config.MyJsonConfig;
+import org.assertj.core.util.Lists;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.web.HttpMessageConverters;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
+import java.util.Collection;
 
 // import org.mybatis.spring.annotation.MapperScan;
 
@@ -46,12 +50,12 @@ public class App {
     }*/
 
     /**
-     * 在这里我们使用@Bean注入HttpMessageConverter
+     * 在这里我们使用@Bean注入HttpMessageConverter(已经搬去JsonConfig)
      */
-    @Bean
-    public HttpMessageConverters fastJsonHttpMessageConverters() {
-        return new HttpMessageConverters(MyJsonConfig.getFastJsonHttpMessageConverter());
-    }
+    // @Bean
+    // public HttpMessageConverters fastJsonHttpMessageConverters() {
+    //     return new HttpMessageConverters(MyJsonConfig.getFastJsonHttpMessageConverter());
+    // }
 
     /**
      * 处理跨域
