@@ -17,11 +17,14 @@ public class PageVo<E> {
 
     private int pageNum;
 
-    private List<E> list;
+    private List<E> records;
+
+    private Long totalAmount;
 
     public PageVo(Page<E> list) {
-        this.list = list.getResult();
+        this.records = list.getResult();
         this.pageSize = list.getPageSize();
         this.pageNum = list.getPageNum();
+        this.totalAmount = list.getTotal();
     }
 }

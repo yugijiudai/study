@@ -59,7 +59,7 @@
         <javax_servlet_jsp-api_version>2.3.0</javax_servlet_jsp-api_version>
         <jackson_version>1.9.8</jackson_version>
         <mysql_version>5.1.30</mysql_version>
-        <javax_servlet_api_version>3.0.1</javax_servlet_api_version>
+        <javax_servlet_api_version>3.1.0</javax_servlet_api_version>
         <c3p0_version>0.9.5-pre8</c3p0_version>
         <json-lib_version>2.4</json-lib_version>
         <lombok_version>1.16.10</lombok_version>
