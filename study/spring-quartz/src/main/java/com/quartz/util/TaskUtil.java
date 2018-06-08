@@ -15,6 +15,8 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.quartz.impl.triggers.SimpleTriggerImpl;
 
+import static org.quartz.TriggerKey.triggerKey;
+
 /**
  * @author yugi
  * @apiNote Quartz调度管理器(任务名字一样时, 任务组名字和触发器名字一定要不同, 不然会当成同一个任务)
@@ -38,7 +40,8 @@ public class TaskUtil {
             SimpleScheduleBuilder simpleScheduleBuilder = SimpleScheduleBuilder.simpleSchedule();
             SimpleScheduleBuilder sc = setTriggerTime(taskBo, simpleScheduleBuilder);
             // 触发器
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, taskBo.getTrigger()).withSchedule(sc).build();
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, taskBo.getJobGroup()).withSchedule(sc).build();
+            // Trigger trigger = TriggerBuilder.newTrigger().withIdentity(jobName, taskBo.getTrigger()).withSchedule(sc).build();
             scheduler.scheduleJob(jobDetail, trigger);
             startScheduler(scheduler);
         }
@@ -246,7 +249,8 @@ public class TaskUtil {
         }
 
         private TriggerKey getTriggerKey(TaskBo taskBo) {
-            return new TriggerKey(taskBo.getJobName(), taskBo.getTrigger());
+            return triggerKey(taskBo.getJobName(), taskBo.getJobGroup());
+            // return new TriggerKey(taskBo.getJobName(), taskBo.getTrigger());
         }
 
     }
